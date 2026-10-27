@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Willkommen &amp; Gogita Dent, стоматологія в Харкові</title>
+<meta name="description" content="Стоматологія в Харкові, пр. Науки, 12. Прайс-лист, ІІ-консультант, запис за телефоном.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@500;600&display=swap">
+</head>
+<body>
+<style>
+/* Layout: асимметричная сетка. Слева текст, справа тёмное окно чата как единственный смелый объект страницы; секции ниже: узкая колонка заголовка + широкая колонка контента. Палитра взята с вывески клиники: коричневый и белый. */
+:root{
+  --bg:#F6F4F3;
+  --surface:#FFFFFF;
+  --ink:#2A1A14;
+  --muted:#6B5A53;
+  --line:#E3DBD7;
+  --brand:#3B2620;
+  --accent:#3B2620;
+  --on-accent:#FFFFFF;
+  --label:#8A5A44;
+  --chat-bg:#3B2620;
+  --chat-ink:#F5ECE7;
+  --chat-muted:#C9B5AB;
+  --chat-bubble:#533830;
+  --chat-hi:#E8D3C6;
+  --chat-hi-ink:#2A1A14;
+  --chat-line:#3B2620;
+  --todo-bg:#FFEFB8;
+  --todo-ink:#5C4300;
+  --f-display:'Montserrat','Golos Text',system-ui,sans-serif;
+  --f-body:'Golos Text',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1A110E; --surface:#261A16; --ink:#F1E9E5; --muted:#B8A69E; --line:#3A2B26;
+    --brand:#E8D3C6; --accent:#E8D3C6; --on-accent:#2A1A14; --label:#D9A98E;
+    --chat-bg:#120B09; --chat-bubble:#2B1D18; --chat-line:#3A2B26;
+    --todo-bg:#3B2E08; --todo-ink:#F0D78A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1A110E; --surface:#261A16; --ink:#F1E9E5; --muted:#B8A69E; --line:#3A2B26;
+  --brand:#E8D3C6; --accent:#E8D3C6; --on-accent:#2A1A14; --label:#D9A98E;
+  --chat-bg:#120B09; --chat-bubble:#2B1D18; --chat-line:#3A2B26;
+  --todo-bg:#3B2E08; --todo-ink:#F0D78A;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--label);outline-offset:2px}
+.wrap{width:100%;max-width:1120px;margin-inline:auto;padding-inline:max(16px,4vw)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.todo{background:var(--todo-bg);color:var(--todo-ink);border-radius:3px;padding:0 .25em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+body.no-todo .todo{background:none;color:inherit;padding:0}
+.draft{background:var(--todo-bg);color:var(--todo-ink);font-size:.82rem}
+.draft-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 16px;padding-block:8px}
+.draft label{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-weight:500}
+
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;padding-block:18px}
+.brand{display:flex;flex-direction:column;text-decoration:none;gap:3px}
+.brand-mark{font:600 .95rem/1.1 var(--f-display);letter-spacing:.14em;text-transform:uppercase}
+.brand-sub{font:400 .68rem/1.3 var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.nav{display:flex;gap:22px;font-size:.92rem}
+.nav a{text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+@media (max-width:760px){.nav{display:none}}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.lang button{font:500 .78rem var(--f-mono);padding:.4em .8em;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,64px);align-items:start;padding-block:clamp(24px,5vw,64px) clamp(40px,7vw,88px)}
+@media (max-width:880px){.hero{grid-template-columns:minmax(0,1fr)}}
+.eyebrow{font:500 .74rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--label);margin:0 0 18px}
+h1{font:600 clamp(1.65rem,4vw,2.8rem)/1.16 var(--f-display);letter-spacing:-.02em;margin:0 0 22px;text-wrap:balance}
+.lead{font-size:1.08rem;color:var(--muted);max-width:52ch;margin:0 0 28px}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px}
+.btn{display:inline-flex;align-items:center;gap:.5em;padding:.85em 1.3em;border-radius:10px;background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);font:600 1rem var(--f-body);text-decoration:none;cursor:pointer;transition:filter .15s}
+.btn:hover{filter:brightness(1.12)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg);filter:none}
+.alt{color:var(--muted);font-size:.95rem}
+.tel{font-family:var(--f-mono);font-size:.92em;color:var(--ink);text-decoration:none;white-space:nowrap}
+a.tel:hover{text-decoration:underline}
+.fine{font-size:.82rem;color:var(--muted);margin:16px 0 0}
+
+.chat{margin:0;display:flex;flex-direction:column;gap:10px;background:var(--chat-bg);color:var(--chat-ink);border:1px solid var(--chat-line);border-radius:18px;padding:18px}
+.chat-h{display:flex;align-items:center;gap:8px;font:400 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--chat-muted);padding-bottom:10px;border-bottom:1px solid var(--chat-bubble)}
+.chat-h .dot{width:8px;height:8px;border-radius:50%;background:var(--chat-hi)}
+.msg{max-width:92%;padding:10px 14px;border-radius:14px;font-size:.95rem;line-height:1.5}
+.msg p{margin:0}
+.msg.user{align-self:flex-end;background:var(--chat-hi);color:var(--chat-hi-ink);border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:var(--chat-bubble);border-bottom-left-radius:4px}
+.ticket{align-self:flex-start;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;border:1px dashed var(--chat-muted);border-radius:10px;padding:10px 14px;max-width:100%}
+.ticket .code{font:500 1.05rem var(--f-mono);letter-spacing:.06em;color:var(--chat-hi)}
+.ticket .offer{font-size:.85rem}
+
+.sec{border-top:1px solid var(--line);padding-block:clamp(40px,7vw,88px)}
+.sec-grid{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:clamp(20px,5vw,56px)}
+@media (max-width:800px){.sec-grid{grid-template-columns:minmax(0,1fr)}}
+.sec-h{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-width:0}
+h2{font:600 clamp(1.05rem,2.2vw,1.3rem)/1.25 var(--f-display);letter-spacing:-.01em;margin:0;text-wrap:balance}
+.note{font-size:.92rem;color:var(--muted);margin:0}
+
+.svc{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(20px,4vw,48px)}
+@media (max-width:620px){.svc{grid-template-columns:minmax(0,1fr)}}
+.svc li{border-bottom:1px solid var(--line)}
+.svc li:nth-child(-n+2){border-top:1px solid var(--ink)}
+@media (max-width:620px){.svc li:nth-child(2){border-top:0}}
+.svc a{display:flex;justify-content:space-between;gap:12px;padding:15px 0;text-decoration:none;font-weight:500}
+.svc .go{font-family:var(--f-mono);color:var(--label);transition:transform .15s}
+.svc a:hover .go{transform:translateX(4px)}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+@media (max-width:760px){.steps{grid-template-columns:minmax(0,1fr)}}
+.steps li{border-top:2px solid var(--ink);padding-top:14px;min-width:0}
+.lbl{font:500 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--label)}
+.steps h3{font:600 1.08rem/1.3 var(--f-body);margin:8px 0 8px}
+.steps p{margin:0;color:var(--muted);font-size:.95rem}
+
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--ink)}
+summary{list-style:none;cursor:pointer;padding:16px 0;font-weight:600;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-mono);color:var(--label)}
+details[open] summary::after{content:"−"}
+details>p{margin:0 0 16px;color:var(--muted);max-width:62ch}
+.gnote{margin:-4px 0 12px!important;font-size:.9rem;color:var(--muted)}
+.tbl-wrap{overflow-x:auto;min-width:0;padding-bottom:12px}
+table{width:100%;border-collapse:collapse}
+td{padding:11px 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+tr:last-child td{border-bottom:0}
+td.n{text-align:right;font:500 .95rem var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:16px}
+td small{display:block;color:var(--muted);font:400 .74rem var(--f-mono);margin-top:2px}
+tr.sub td{padding:18px 0 8px;border-bottom:1px solid var(--ink);font:500 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--label)}
+tr:first-child.sub td{padding-top:6px}
+
+.arch{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:clamp(12px,3vw,22px)}
+.row{display:grid;grid-template-columns:repeat(8,minmax(0,1fr)) 14px repeat(8,minmax(0,1fr));gap:3px}
+.tooth{height:44px;min-width:0;padding:0;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:500 clamp(.58rem,1.8vw,.78rem) var(--f-mono);cursor:pointer}
+.row.upper .tooth{border-radius:10px 10px 16px 16px}
+.row.lower .tooth{border-radius:16px 16px 10px 10px}
+.tooth:hover{border-color:var(--ink)}
+.tooth[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.midrule{display:flex;justify-content:space-between;margin-block:10px;padding-block:6px;border-block:1px dashed var(--line);font:400 .66rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.tooth-info{margin:16px 0 0;font-size:1.02rem;min-height:1.6em}
+.tooth-info b{font-family:var(--f-mono);font-weight:500}
+
+.gal{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal figure{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.gal .ph{aspect-ratio:4/5;overflow:hidden;border-radius:12px;background:var(--brand)}
+.gal img{width:100%;height:100%;object-fit:cover}
+.gal figcaption{font:400 .74rem/1.35 var(--f-mono);color:var(--muted)}
+.gal-wrap{display:flex;flex-direction:column;gap:18px;min-width:0}
+
+.facts{display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr);margin:0}
+.facts dt{font:500 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:16px 12px 16px 0;border-bottom:1px solid var(--line)}
+.facts dd{margin:0;padding:14px 0;border-bottom:1px solid var(--line)}
+.facts dd span.ch{display:block;font-size:.82rem;color:var(--muted)}
+.where-btn{margin-top:22px}
+
+.faq details:first-of-type{border-top:1px solid var(--ink)}
+.faq p{margin:0 0 16px;color:var(--muted);max-width:62ch}
+
+.final{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,5vw,48px)}
+@media (max-width:800px){.final{grid-template-columns:minmax(0,1fr)}}
+.final p{color:var(--muted);margin:14px 0 0}
+.codebox{border:1px dashed var(--ink);border-radius:12px;padding:18px;display:grid;gap:12px;justify-items:start;min-width:0}
+.codebox .code{font:500 clamp(1.2rem,4vw,1.7rem) var(--f-mono);letter-spacing:.06em}
+.codebox .offer{font-size:.9rem;color:var(--muted)}
+.cta-main{margin-top:22px}
+
+.foot{border-top:1px solid var(--line);padding-block:32px;font-size:.84rem;color:var(--muted)}
+.foot p{margin:0 0 8px;max-width:70ch}
+
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+
+<div class="draft"><div class="wrap draft-in">
+  <span><span data-ru="Черновик для клиента. Жёлтым выделено то, что нужно уточнить перед запуском.">Чернетка для клієнта. Жовтим виділено те, що треба уточнити перед запуском.</span></span>
+  <label><input type="checkbox" id="todoToggle" checked> <span><span data-ru="Подсвечивать">Підсвічувати</span></span></label>
+</div></div>
+
+<header class="wrap top" id="top">
+  <a class="brand" href="#top">
+    <span class="brand-mark">Willkommen &amp; Gogita Dent</span>
+    <span class="brand-sub"><span data-ru="стоматология · Харьков, пр. Науки, 12">стоматологія · Харків, пр. Науки, 12</span></span>
+  </a>
+  <nav class="nav" aria-label="Розділи">
+    <a href="#services"><span data-ru="Направления">Напрями</span></a>
+    <a href="#prices"><span data-ru="Цены">Ціни</span></a>
+    <a href="#where"><span data-ru="Как найти">Як знайти</span></a>
+    <a href="#faq"><span data-ru="Вопросы">Питання</span></a>
+  </nav>
+  <div class="lang" role="group" aria-label="Мова / Язык">
+    <button type="button" data-lang="ua" aria-pressed="true">UA</button>
+    <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+  </div>
+</header>
+
+<main>
+<section class="wrap hero">
+  <div class="hero-copy">
+    <p class="eyebrow"><span data-ru="Стоматология в Харькове">Стоматологія в Харкові</span></p>
+    <h1><span data-ru="Узнайте стоимость лечения раньше, чем позвоните">Дізнайтесь вартість лікування раніше, ніж зателефонуєте</span></h1>
+    <p class="lead"><span data-ru="ИИ-консультант в ChatGPT ответит на украинском или русском, назовёт ориентировочную цену по нашему прайсу и поможет записаться. Диагнозы он не ставит: их ставит врач на осмотре.">ІІ-консультант у ChatGPT відповість українською або російською, назве орієнтовну ціну за нашим прайсом і допоможе записатися. Діагнози він не ставить: їх ставить лікар на огляді.</span></p>
+    <div class="cta-row">
+      <a class="btn" data-gpt href="https://chatgpt.com/gpts" target="_blank" rel="noopener"><span data-ru="Открыть ИИ-консультанта">Відкрити ІІ-консультанта</span></a>
+      <span class="alt"><span data-ru="Или позвоните:">Або зателефонуйте:</span> <a class="tel" href="tel:+380677130913">067 713-09-13</a></span>
+    </div>
+    <p class="fine"><span data-ru="Бесплатно. Консультант открывается в ChatGPT.">Безкоштовно. Консультант відкривається в ChatGPT.</span></p>
+  </div>
+
+  <figure class="chat">
+    <figcaption class="chat-h"><span class="dot"></span><span><span data-ru="ИИ-консультант · пример диалога">ІІ-консультант · приклад діалогу</span></span></figcaption>
+    <div class="msg user"><p><span data-ru="Сколько стоит имплантация?">Скільки коштує імплантація?</span></p></div>
+    <div class="msg bot"><p><span data-ru="Сам имплант стоит от 400 $ (JD, Италия) до 800 € (Straumann, Швейцария). Оплата в гривнах по курсу НБУ. Коронка на импланте отдельно: металлокерамика от 11 500 грн. Точную сумму назовёт врач после консультации. Я ИИ, а не врач, поэтому это лишь ориентир.">Сам імплант коштує від 400 $ (JD, Італія) до 800 € (Straumann, Швейцарія). Оплата в гривнях за курсом НБУ. Коронка на імпланті окремо: металокераміка від 11 500 грн. Точну суму назве лікар після консультації. Я ІІ, а не лікар, тому це лише орієнтир.</span></p></div>
+    <div class="msg bot"><p><span data-ru="Чтобы записаться, назовите администратору код:">Щоб записатися, назвіть адміністратору код:</span></p></div>
+    <div class="ticket"><span class="code">AI-ХАРКІВ</span><span class="offer"><span class="todo"><span data-ru="Условия скидки уточнить у клиники">Умови знижки уточнити у клініки</span></span></span></div>
+  </figure>
+</section>
+
+<section class="sec" id="services">
+  <div class="wrap sec-grid">
+    <div class="sec-h">
+      <h2><span data-ru="Направления">Напрями</span></h2>
+      <p class="note"><span data-ru="Нажмите на направление, чтобы увидеть цены.">Натисніть на напрям, щоб побачити ціни.</span></p>
+    </div>
+    <ul class="svc">
+<li><a href="#p-diag" data-open="p-diag"><span><span data-ru="Гигиеническая чистка">Гігієнічне чищення</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-diag" data-open="p-diag"><span><span data-ru="Лечение дёсен">Лікування ясен</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-caries" data-open="p-caries"><span><span data-ru="Лечение кариеса">Лікування карієсу</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-endo" data-open="p-endo"><span><span data-ru="Эндодонтия">Ендодонтія</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-prost" data-open="p-prost"><span><span data-ru="Протезирование, все виды">Протезування, всі види</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-prost" data-open="p-prost"><span><span data-ru="Виниры: цирконий, E-Max">Вініри: цирконій, E-Max</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-braces" data-open="p-braces"><span><span data-ru="Ортодонтия">Ортодонтія</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-surg" data-open="p-surg"><span><span data-ru="Хирургия">Хірургія</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-surg" data-open="p-surg"><span><span data-ru="Резекция">Резекція</span></span><span class="go" aria-hidden="true">→</span></a></li>
+<li><a href="#p-impl" data-open="p-impl"><span><span data-ru="Импланты">Імпланти</span></span><span class="go" aria-hidden="true">→</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap sec-grid">
+    <div class="sec-h"><h2><span data-ru="Как это работает">Як це працює</span></h2></div>
+    <ol class="steps">
+      <li><span class="lbl"><span data-ru="Шаг 1">Крок 1</span></span><h3><span data-ru="Спросите">Запитайте</span></h3><p><span data-ru="Опишите, что беспокоит, или назовите услугу. Язык ответа консультант выбирает по вашему первому сообщению.">Опишіть, що турбує, або назвіть послугу. Мову відповіді консультант обирає за вашим першим повідомленням.</span></p></li>
+      <li><span class="lbl"><span data-ru="Шаг 2">Крок 2</span></span><h3><span data-ru="Получите ориентир">Отримайте орієнтир</span></h3><p><span data-ru="Цена берётся из прайса клиники. Если услуги в нём нет, консультант честно скажет об этом и предложит консультацию врача.">Ціна береться з прайсу клініки. Якщо послуги в ньому немає, консультант чесно скаже про це й запропонує консультацію лікаря.</span></p></li>
+      <li><span class="lbl"><span data-ru="Шаг 3">Крок 3</span></span><h3><span data-ru="Запишитесь">Запишіться</span></h3><p><span data-ru="Назовите администратору код AI-ХАРКІВ или позвоните. Окончательную сумму врач называет после осмотра.">Назвіть адміністратору код AI-ХАРКІВ або зателефонуйте. Остаточну суму лікар називає після огляду.</span></p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="prices">
+  <div class="wrap sec-grid">
+    <div class="sec-h">
+      <h2><span data-ru="Прайс-лист">Прайс-лист</span></h2>
+      <p class="note"><span data-ru="Цены в гривнах, действуют с 01.07.2026. Окончательную сумму определяет врач после осмотра.">Ціни в гривнях, діють з 01.07.2026. Остаточну суму визначає лікар після огляду.</span></p>
+      <a class="btn ghost" data-gpt href="https://chatgpt.com/gpts" target="_blank" rel="noopener"><span data-ru="Посчитать для моего случая">Порахувати для мого випадку</span></a>
+    </div>
+    <div class="prices" style="min-width:0">
+<details id="p-diag" open><summary><span data-ru="Консультации, диагностика, гигиена">Консультації, діагностика, гігієна</span></summary><div class="tbl-wrap"><table><tbody><tr class="sub"><td colspan="2"><span data-ru="Консультации">Консультації</span></td></tr><tr><td><span data-ru="Консультация терапевта">Консультація терапевта</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация ортопеда">Консультація ортопеда</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация ортодонта">Консультація ортодонта</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация хирурга">Консультація хірурга</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация имплантолога">Консультація імплантолога</span></td><td class="n"><span class="todo">500 грн</span></td></tr><tr class="sub"><td colspan="2"><span data-ru="Диагностика и гигиена">Діагностика та гігієна</span></td></tr><tr><td><span data-ru="Цифровой рентген">Рентген цифровий</span></td><td class="n">300 грн</td></tr><tr><td><span data-ru="Гигиеническая чистка полости рта">Гігієнічне чищення порожнини рота</span></td><td class="n">2 000 грн</td></tr><tr><td><span data-ru="Air Flow">Air Flow</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Фторирование">Фторування</span></td><td class="n">400 грн</td></tr><tr><td><span data-ru="Лечение дёсен (курс 5 дней)">Лікування ясен (курс 5 днів)</span></td><td class="n">4 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Анестезия">Анестезія</span></td></tr><tr><td><span data-ru="Субмукозная">Субмукозна</span><small><span data-ru="1 карпула">1 карпула</span></small></td><td class="n">400 грн</td></tr><tr><td><span data-ru="Аппликационная">Аплікаційна</span></td><td class="n">300 грн</td></tr><tr><td><span data-ru="Проводниковая">Провідникова</span><small><span data-ru="1 карпула">1 карпула</span></small></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Инфильтрационная">Інфільтраційна</span><small><span data-ru="1 карпула">1 карпула</span></small></td><td class="n">400 грн</td></tr></tbody></table></div></details>
+<details id="p-caries"><summary><span data-ru="Лечение кариеса">Лікування карієсу</span></summary><div class="tbl-wrap"><table><tbody><tr class="sub"><td colspan="2"><span data-ru="3-й класс">3-й клас</span></td></tr><tr><td><span data-ru="Лечение кариеса">Лікування карієсу</span></td><td class="n">2 000 грн</td></tr><tr><td><span data-ru="Реставрация зуба">Реставрація зуба</span></td><td class="n">2 500 грн</td></tr><tr><td><span data-ru="Наращивание коронковой части зуба">Нарощування коронкової частини зуба</span></td><td class="n">3 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="2-й класс">2-й клас</span></td></tr><tr><td><span data-ru="Лечение кариеса">Лікування карієсу</span></td><td class="n">2 500 грн</td></tr><tr><td><span data-ru="Реставрация зуба">Реставрація зуба</span></td><td class="n">3 000 грн</td></tr><tr><td><span data-ru="Наращивание коронковой части зуба">Нарощування коронкової частини зуба</span></td><td class="n">3 500 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="1-й класс">1-й клас</span></td></tr><tr><td><span data-ru="Лечение кариеса">Лікування карієсу</span></td><td class="n">3 000 грн</td></tr><tr><td><span data-ru="Реставрация зуба">Реставрація зуба</span></td><td class="n">3 500 грн</td></tr><tr><td><span data-ru="Наращивание коронковой части зуба">Нарощування коронкової частини зуба</span></td><td class="n">4 500 грн</td></tr></tbody></table></div></details>
+<details id="p-endo"><summary><span data-ru="Эндодонтическое лечение">Ендодонтичне лікування</span></summary><div class="tbl-wrap"><table><tbody><tr><td><span data-ru="Вторичный периодонтит">Вторинний періодонтит</span><small><span data-ru="1 канал">1 канал</span></small></td><td class="n">1 000 грн</td></tr><tr><td><span data-ru="Пломбирование канала">Пломбування каналу</span><small><span data-ru="1 канал">1 канал</span></small></td><td class="n">1 500 грн</td></tr><tr><td><span data-ru="Adseal">Adseal</span><small><span data-ru="1 канал">1 канал</span></small></td><td class="n">1 500 грн</td></tr><tr><td><span data-ru="Kerr Sealapex">Kerr Sealapex</span><small><span data-ru="1 канал">1 канал</span></small></td><td class="n">1 700 грн</td></tr><tr><td><span data-ru="Abscess Remedy">Abscess Remedy</span><small><span data-ru="1 канал">1 канал</span></small></td><td class="n">2 000 грн</td></tr><tr><td><span data-ru="Dia Paste (кальций)">Dia Paste (кальцій)</span><small><span data-ru="1 канал">1 канал</span></small></td><td class="n">700 грн</td></tr><tr><td><span data-ru="Стекловолоконный штифт">Штифт скловолоконний</span><small><span data-ru="1 шт.">1 шт.</span></small></td><td class="n">800 грн</td></tr><tr><td><span data-ru="Изоляционная прокладка Reoliner-LC">Ізоляційна прокладка Reoliner-LC</span><small><span data-ru="1 шт.">1 шт.</span></small></td><td class="n">700 грн</td></tr></tbody></table></div></details>
+<details id="p-prost"><summary><span data-ru="Протезирование">Протезування</span></summary><div class="tbl-wrap"><table><tbody><tr class="sub"><td colspan="2"><span data-ru="Коронки и виниры">Коронки та вініри</span></td></tr><tr><td><span data-ru="Цельнометаллическая коронка">Коронка суцільнометалева</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">2 500 грн</td></tr><tr><td><span data-ru="Металлокерамическая коронка Duceram, Германия">Металокерамічна коронка Duceram, Німеччина</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">5 000 грн</td></tr><tr><td><span data-ru="Металлокерамическая коронка Kuraray, Япония">Металокерамічна коронка Kuraray, Японія</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">6 000 грн</td></tr><tr><td><span data-ru="Циркониевая коронка Wieland, Германия">Діоксид-цирконієва коронка Wieland, Німеччина</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">7 000 грн</td></tr><tr><td><span data-ru="Циркониевая коронка Sirona, Япония">Діоксид-цирконієва коронка Sirona, Японія</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">9 000 грн</td></tr><tr><td><span data-ru="Циркониевая коронка Ivoclar, Швейцария">Діоксид-цирконієва коронка Ivoclar, Швейцарія</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">11 000 грн</td></tr><tr><td><span data-ru="Прессованная керамическая коронка Duceram, Германия">Пресована керамічна коронка Duceram, Німеччина</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">10 000 грн</td></tr><tr><td><span data-ru="Прессованная керамическая коронка E-Max с диоксидом">Пресована керамічна коронка E-Max з діоксидом</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">15 000 грн</td></tr><tr><td><span data-ru="Люминир E-Max 0.6 mk">Люмінір E-Max 0.6 mk</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">11 000 грн</td></tr><tr><td><span data-ru="Винир E-Max 0.3 mk">Вінір E-Max 0.3 mk</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">15 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Протезирование на имплантах">Протезування на імплантах</span></td></tr><tr><td><span data-ru="Металлокерамическая коронка на импланте">Металокерамічна коронка на імпланті</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">11 500 грн</td></tr><tr><td><span data-ru="Керамическая коронка на импланте">Керамічна коронка на імпланті</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">14 000 грн</td></tr><tr><td><span data-ru="Абатмент циркониевый">Абатмент цирконієвий</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">8 000 грн</td></tr><tr><td><span data-ru="Бюгельный протез на имплантах">Бюгельний протез на імплантах</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">15 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Съёмные протезы">Знімні протези</span></td></tr><tr><td><span data-ru="Съёмный протез акриловый">Знімний протез акриловий</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">9 000 грн</td></tr><tr><td><span data-ru="Съёмный протез нейлоновый">Знімний протез нейлоновий</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">14 000 грн</td></tr><tr><td><span data-ru="Бюгельный протез кламмерный (ацеталь)">Бюгельний протез кламерний (ацеталь)</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">17 000 грн</td></tr><tr><td><span data-ru="Бюгельный протез системы NEY">Бюгельний протез системи NEY</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">19 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Ремонт протезов">Ремонт протезів</span></td></tr><tr><td><span data-ru="Перебазирование протеза (лабораторное)">Перебазування протеза (лабораторне)</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">2 500 грн</td></tr><tr><td><span data-ru="Перебазирование протеза в клинике">Перебазування протеза в клініці</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">3 000 грн</td></tr><tr><td><span data-ru="Приварка зуба">Приварка зуба</span></td><td class="n">2 000 грн</td></tr><tr><td><span data-ru="Приварка кламмера">Приварка кламера</span></td><td class="n">2 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Подготовка и вспомогательные работы">Підготовка та допоміжні роботи</span></td></tr><tr><td><span data-ru="Снятие коронок">Зрізання коронок</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Препарирование зуба под коронку">Препарування зуба під коронку</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">300 грн</td></tr><tr><td><span data-ru="Слепок">Зліпок</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Слепок А-силикон">Зліпок А-силікон</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">1 000 грн</td></tr><tr><td><span data-ru="Временные коронки">Тимчасові коронки</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">1 000 грн</td></tr><tr><td><span data-ru="Установка МК, ЦЛ">Встановлення МК, ЦЛ</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Установка диоксида циркония">Встановлення діоксиду цирконію</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">700 грн</td></tr><tr><td><span data-ru="Установка винира">Встановлення віниру</span><small><span data-ru="1 ед.">1 од.</span></small></td><td class="n">1 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Капы">Капи</span></td></tr><tr><td><span data-ru="Боксёрская капа">Боксерська капа</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">6 000 грн</td></tr><tr><td><span data-ru="Капа при бруксизме">Капа при бруксизмі</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">2 000 грн</td></tr></tbody></table></div></details>
+<details id="p-braces"><summary><span data-ru="Ортодонтия, брекеты">Ортодонтія, брекети</span></summary><div class="tbl-wrap"><table><tbody><tr class="sub"><td colspan="2"><span data-ru="Брекет-системы">Брекет-системи</span></td></tr><tr><td><span data-ru="Металлические лигатурные">Металеві лігуємі</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">20 000 грн</td></tr><tr><td><span data-ru="Керамические лигатурные">Керамічні лігуємі</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">22 000 грн</td></tr><tr><td><span data-ru="Металлические самолигирующие">Металеві самолігуємі</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">25 000 грн</td></tr><tr><td><span data-ru="Керамические самолигирующие">Керамічні самолігуємі</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">30 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Обслуживание">Обслуговування</span></td></tr><tr><td><span data-ru="Коррекция лигатуры">Корекція лігатури</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">800–1 500 грн</td></tr><tr><td><span data-ru="Дуга (замена дуги)">Дуга (заміна дуги)</span><small><span data-ru="1 челюсть">1 щелепа</span></small></td><td class="n">1 000–1 500 грн</td></tr><tr><td><span data-ru="Замена замка, скол замка">Заміна замка, скол замка</span><small><span data-ru="1 замок">1 замок</span></small></td><td class="n">2 000–3 000 грн</td></tr></tbody></table></div></details>
+<details id="p-surg"><summary><span data-ru="Хирургическая стоматология">Хірургічна стоматологія</span></summary><p class="gnote"><span data-ru="Стоимость указана без учёта анестезии.">Вартість вказана без урахування анестезії.</span></p><div class="tbl-wrap"><table><tbody><tr><td><span data-ru="Удаление молочных зубов">Видалення молочних зубів</span></td><td class="n">від 500 грн</td></tr><tr><td><span data-ru="Удаление, 1 степень">Видалення, 1 ступінь</span></td><td class="n">1 000 грн</td></tr><tr><td><span data-ru="Удаление, 2 степень">Видалення, 2 ступінь</span></td><td class="n">2 500 грн</td></tr><tr><td><span data-ru="Удаление, 3 степень">Видалення, 3 ступінь</span></td><td class="n">3 500 грн</td></tr><tr><td><span data-ru="Ушивание лунки">Ушивання лунки</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Альвостазная губка">Альвостазна губка</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Пластика уздечки губы">Пластика вуздечки губи</span></td><td class="n">5 000 грн</td></tr><tr><td><span data-ru="Удаление ретинированного зуба мудрости">Видалення ретинованого зуба мудрості</span></td><td class="n">8 000–12 000 грн</td></tr><tr><td><span data-ru="Резекция верхушки корня">Резекція верхівки кореня</span></td><td class="n">6 000–10 000 грн</td></tr><tr><td><span data-ru="Удаление экзостозов">Видалення екзостозів</span></td><td class="n">від 2 500 грн</td></tr><tr><td><span data-ru="Лечение перикоронарита">Лікування перикоронариту</span></td><td class="n">2 500 грн</td></tr><tr><td><span data-ru="Переостеотомия">Переостотомія</span></td><td class="n">1 000 грн</td></tr></tbody></table></div></details>
+<details id="p-impl"><summary><span data-ru="Имплантация">Імплантація</span></summary><p class="gnote"><span data-ru="Цены на импланты указаны в € и $, оплата в гривнах по курсу НБУ на день установки.">Ціни на імпланти вказані в € і $, оплата в гривнях за курсом НБУ на день встановлення.</span></p><div class="tbl-wrap"><table><tbody><tr><td><span data-ru="Консультация имплантолога">Консультація імплантолога</span></td><td class="n"><span class="todo">1 000 грн</span></td></tr><tr><td><span data-ru="3D-сканер">3D-сканер</span></td><td class="n">2 000 грн</td></tr><tr><td><span data-ru="Навигационный шаблон">Навігаційний шаблон</span></td><td class="n">4 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Имплант">Імплант</span></td></tr><tr><td><span data-ru="JD, Италия">JD, Італія</span></td><td class="n">400 $</td></tr><tr><td><span data-ru="MegaGen, Южная Корея">MegaGen, Південна Корея</span></td><td class="n">500 $</td></tr><tr><td><span data-ru="Neodent (ДП Straumann)">Neodent (ДП Straumann)</span></td><td class="n">600 $</td></tr><tr><td><span data-ru="Straumann, Швейцария">Straumann, Швейцарія</span></td><td class="n">800 €</td></tr><tr class="sub"><td colspan="2"><span data-ru="Формирователь десны">Формувач ясен</span></td></tr><tr><td><span data-ru="Формирователь десны">Формувач ясен</span></td><td class="n">40–60 $</td></tr><tr><td><span data-ru="Установка формирователя десны">Встановлення формувача ясен</span></td><td class="n">2 500 грн</td></tr></tbody></table></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="visit">
+  <div class="wrap sec-grid">
+    <div class="sec-h">
+      <h2><span data-ru="Что происходит на приёме">Що відбувається на прийомі</span></h2>
+      <p class="note"><span data-ru="Врач осматривает зубы и записывает их по международной нумерации FDI. Первая цифра показывает четверть челюсти, вторая номер зуба от центра. Стороны указаны с точки зрения пациента. Нажмите на зуб, чтобы увидеть расшифровку.">Лікар оглядає зуби й записує їх за міжнародною нумерацією FDI. Перша цифра показує чверть щелепи, друга номер зуба від центру. Сторони вказано з погляду пацієнта. Натисніть на зуб, щоб побачити розшифровку.</span></p>
+    </div>
+    <div style="min-width:0">
+      <div class="arch" role="group" aria-label="FDI">
+        <div class="row upper" id="rowUp"></div>
+        <div class="midrule"><span><span data-ru="справа">праворуч</span></span><span><span data-ru="слева">ліворуч</span></span></div>
+        <div class="row lower" id="rowLo"></div>
+      </div>
+      <p class="tooth-info" id="toothInfo" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="clinic">
+  <div class="wrap sec-grid">
+    <div class="sec-h">
+      <h2><span data-ru="Клиника">Клініка</span></h2>
+      <p class="note"><span data-ru="Цифровой рентген и 3D-сканер для планирования имплантации.">Цифровий рентген і 3D-сканер для планування імплантації.</span></p>
+    </div>
+    <div class="gal-wrap">
+      <ul class="gal">
+        <li><figure><div class="ph"><img src="assets/entrance.jpg" width="900" height="1200" loading="lazy" alt="Лікар біля входу в клініку"></div><figcaption><span data-ru="Вход в клинику">Вхід у клініку</span></figcaption></figure></li>
+        <li><figure><div class="ph"><img src="assets/exam.jpg" width="900" height="1200" loading="lazy" style="object-position:72% 40%" alt="Лікар під час огляду"></div><figcaption><span data-ru="Осмотр">Огляд</span></figcaption></figure></li>
+        <li><figure><div class="ph"><img src="assets/xray.jpg" width="900" height="1118" loading="lazy" alt="Лікар показує знімок на екрані"></div><figcaption><span data-ru="План лечения по снимку">План лікування за знімком</span></figcaption></figure></li>
+        <li><figure><div class="ph"><img src="assets/logo.jpg" width="900" height="1047" loading="lazy" alt="Willkommen &amp; Gogita Dent, стоматологія"></div><figcaption>Willkommen &amp; Gogita Dent</figcaption></figure></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="where">
+  <div class="wrap sec-grid">
+    <div class="sec-h"><h2><span data-ru="Как найти">Як знайти</span></h2></div>
+    <div style="min-width:0">
+      <dl class="facts">
+        <dt><span data-ru="Адрес">Адреса</span></dt><dd><span data-ru="Харьков, пр. Науки, 12">Харків, пр. Науки, 12</span></dd>
+        <dt><span data-ru="График">Графік</span></dt><dd><span data-ru="Пн-Пт 9:00-19:00&lt;span class=&quot;ch&quot;&gt;Суббота по записи, воскресенье выходной&lt;/span&gt;">Пн-Пт 9:00-19:00<span class="ch">Субота за записом, неділя вихідний</span></span></dd>
+        <dt><span data-ru="Телефоны">Телефони</span></dt><dd>
+          <a class="tel" href="tel:+380677130913">067 713-09-13</a><br>
+          <a class="tel" href="tel:+380679005418">067 900-54-18</a><span class="ch">WhatsApp, Viber, Telegram</span>
+          <a class="tel" href="tel:+380991891035">099 189-10-35</a>
+        </dd>
+      </dl>
+      <a class="btn ghost where-btn" href="https://www.google.com/maps/search/?api=1&amp;query=%D0%BF%D1%80%D0%BE%D1%81%D0%BF%D0%B5%D0%BA%D1%82%20%D0%9D%D0%B0%D1%83%D0%BA%D0%B8%2012%2C%20%D0%A5%D0%B0%D1%80%D0%BA%D1%96%D0%B2" target="_blank" rel="noopener"><span data-ru="Открыть на карте">Відкрити на карті</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap sec-grid">
+    <div class="sec-h"><h2><span data-ru="Вопросы">Питання</span></h2></div>
+    <div class="faq" style="min-width:0">
+      <details><summary><span data-ru="ИИ-консультант заменяет врача?">ІІ-консультант замінює лікаря?</span></summary><p><span data-ru="Нет. Он даёт ориентир по прайсу и помогает записаться. Диагноз и план лечения определяет врач на осмотре.">Ні. Він дає орієнтир за прайсом і допомагає записатися. Діагноз і план лікування визначає лікар на огляді.</span></p></details>
+      <details><summary><span data-ru="Это бесплатно?">Це безкоштовно?</span></summary><p><span data-ru="Консультант не берёт плату. Он открывается в ChatGPT, поэтому нужен вход в ваш аккаунт ChatGPT.">Консультант не бере плати. Він відкривається в ChatGPT, тому потрібен вхід у ваш акаунт ChatGPT.</span></p></details>
+      <details><summary><span data-ru="Входит ли анестезия в стоимость?">Чи входить анестезія у вартість?</span></summary><p><span data-ru="Нет. В хирургических услугах стоимость указана без анестезии. Анестезия оплачивается отдельно: от 300 грн, карпула 400-500 грн.">Ні. У хірургічних послугах вартість вказана без анестезії. Анестезія оплачується окремо: від 300 грн, карпула 400-500 грн.</span></p></details>
+      <details><summary><span data-ru="В какой валюте цены на имплантацию?">У якій валюті ціни на імплантацію?</span></summary><p><span data-ru="Импланты в прайсе указаны в евро и долларах. Платить нужно в гривнах по курсу НБУ на день установки.">Імпланти в прайсі вказані в євро й доларах. Платити потрібно в гривнях за курсом НБУ на день встановлення.</span></p></details>
+      <details><summary><span data-ru="Зуб болит прямо сейчас">Зуб болить прямо зараз</span></summary><p><span data-ru="Не ждите ответа чата, позвоните: &lt;a class=&quot;tel&quot; href=&quot;tel:+380677130913&quot;&gt;067 713-09-13&lt;/a&gt;. &lt;span class=&quot;todo&quot;&gt;Уточнить, как клиника принимает с острой болью.&lt;/span&gt;">Не чекайте відповіді чату, зателефонуйте: <a class="tel" href="tel:+380677130913">067 713-09-13</a>. <span class="todo">Уточнити, як клініка приймає з гострим болем.</span></span></p></details>
+      <details><summary><span data-ru="Какие данные можно писать в чат?">Які дані можна писати в чат?</span></summary><p><span data-ru="Достаточно описать симптом или услугу. Не указывайте в чате паспортные данные и номера документов.">Достатньо описати симптом або послугу. Не вказуйте в чаті паспортні дані й номери документів.</span></p></details>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="final">
+      <div>
+        <h2><span data-ru="Начните с одного вопроса">Почніть з одного запитання</span></h2>
+        <p><span data-ru="Спросите консультанта о цене. Если всё устроит, назовите администратору код при записи.">Запитайте консультанта про ціну. Якщо вас усе влаштує, назвіть адміністратору код під час запису.</span></p>
+        <a class="btn cta-main" data-gpt href="https://chatgpt.com/gpts" target="_blank" rel="noopener"><span data-ru="Открыть ИИ-консультанта">Відкрити ІІ-консультанта</span></a>
+      </div>
+      <div class="codebox">
+        <span class="code" id="promo">AI-ХАРКІВ</span>
+        <span class="offer"><span class="todo"><span data-ru="Условия скидки уточнить у клиники">Умови знижки уточнити у клініки</span></span></span>
+        <button type="button" class="btn ghost" id="copyBtn"><span data-ru="Скопировать код">Скопіювати код</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <p>© 2026 Willkommen &amp; Gogita Dent. <span data-ru="Лицензия МЗ Украины, серия АЕ № 638590 от 16.04.2015.">Ліцензія МОЗ України, серія АЕ № 638590 від 16.04.2015.</span></p>
+  <p><span data-ru="Информация на сайте и в чате справочная и не заменяет консультацию врача. Есть противопоказания, нужна консультация специалиста.">Інформація на сайті й у чаті довідкова та не замінює консультацію лікаря. Є протипоказання, потрібна консультація спеціаліста.</span></p>
+</div></footer>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dentist","name":"Willkommen & Gogita Dent","telephone":["+380677130913","+380679005418","+380991891035"],"address":{"@type":"PostalAddress","streetAddress":"пр. Науки, 12","addressLocality":"Харків","addressCountry":"UA"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"19:00"}]}
+</script>
+
+<script>
+(function(){
+  // Вставьте сюда ссылку на ваш GPT, например https://chatgpt.com/g/g-xxxx
+  var GPT_URL = "";
+  var UTM = "?utm_source=landing&utm_medium=button";
+
+  var TOOTH = {
+    ua:{
+      pos:["центральний різець","бічний різець","ікло","перший премоляр","другий премоляр","перший моляр","другий моляр","зуб мудрості"],
+      upper:"верхня щелепа", lower:"нижня щелепа", right:"праворуч", left:"ліворуч", word:"Зуб", copied:"Скопійовано"
+    },
+    ru:{
+      pos:["центральный резец","боковой резец","клык","первый премоляр","второй премоляр","первый моляр","второй моляр","зуб мудрости"],
+      upper:"верхняя челюсть", lower:"нижняя челюсть", right:"справа", left:"слева", word:"Зуб", copied:"Скопировано"
+    }
+  };
+
+  var nodes = [].slice.call(document.querySelectorAll("[data-ru]"));
+  nodes.forEach(function(n){ n.setAttribute("data-ua", n.innerHTML); });
+  var lang = "ua";
+  var selected = 36;
+
+  function toothText(n){
+    var t = TOOTH[lang], q = Math.floor(n / 10), p = n % 10;
+    var jaw = q <= 2 ? t.upper : t.lower;
+    var side = (q === 1 || q === 4) ? t.right : t.left;
+    return t.word + " <b>" + n + "</b>: " + t.pos[p - 1] + ", " + jaw + ", " + side + ".";
+  }
+
+  function select(n){
+    selected = n;
+    [].forEach.call(document.querySelectorAll(".tooth"), function(b){
+      b.setAttribute("aria-pressed", String(Number(b.getAttribute("data-n")) === n));
+    });
+    document.getElementById("toothInfo").innerHTML = toothText(n);
+  }
+
+  function build(rowId, list){
+    var row = document.getElementById(rowId);
+    list.forEach(function(n, i){
+      if (i === 8){ row.appendChild(document.createElement("span")); }
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "tooth"; b.textContent = n;
+      b.setAttribute("data-n", n); b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function(){ select(n); });
+      row.appendChild(b);
+    });
+  }
+  build("rowUp", [18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28]);
+  build("rowLo", [48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38]);
+
+  function setLang(l){
+    lang = l;
+    document.documentElement.lang = (l === "ua" ? "uk" : "ru");
+    nodes.forEach(function(n){
+      n.innerHTML = (l === "ru") ? n.getAttribute("data-ru") : n.getAttribute("data-ua");
+    });
+    [].forEach.call(document.querySelectorAll("[data-lang]"), function(b){
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === l));
+    });
+    select(selected);
+    try { localStorage.setItem("gogita-lang", l); } catch(e){}
+  }
+  [].forEach.call(document.querySelectorAll("[data-lang]"), function(b){
+    b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); });
+  });
+
+  if (GPT_URL){
+    [].forEach.call(document.querySelectorAll("[data-gpt]"), function(a){ a.href = GPT_URL + UTM; });
+  }
+
+  // переход от напрямка к нужному разделу прайса: раскрываем его
+  [].forEach.call(document.querySelectorAll("[data-open]"), function(a){
+    a.addEventListener("click", function(e){
+      var d = document.getElementById(a.getAttribute("data-open"));
+      if (!d) return;
+      e.preventDefault();
+      d.open = true;
+      d.scrollIntoView({behavior:"smooth", block:"start"});
+      try { history.replaceState(null, "", "#" + d.id); } catch(err){}
+    });
+  });
+
+  document.getElementById("todoToggle").addEventListener("change", function(e){
+    document.body.classList.toggle("no-todo", !e.target.checked);
+  });
+
+  var copyBtn = document.getElementById("copyBtn");
+  copyBtn.addEventListener("click", function(){
+    var code = document.getElementById("promo").textContent;
+    var prev = copyBtn.innerHTML;
+    function done(){
+      copyBtn.textContent = TOOTH[lang].copied;
+      setTimeout(function(){ copyBtn.innerHTML = prev; }, 1600);
+    }
+    function fallback(){
+      var r = document.createRange(); r.selectNodeContents(document.getElementById("promo"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+    try { navigator.clipboard.writeText(code).then(done, fallback); } catch(e){ fallback(); }
+  });
+
+  var saved = null;
+  try { saved = localStorage.getItem("gogita-lang"); } catch(e){}
+  select(selected);
+  if (saved === "ru") setLang("ru");
+})();
+</script>
+</body>
+</html>
