@@ -1,0 +1,6 @@
+# Сайт лежит в public/, функции в netlify/functions/ (вне публичной папки, исходники наружу не отдаются).
+[build]
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"

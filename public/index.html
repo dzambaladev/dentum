@@ -53,6 +53,7 @@
 }
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
@@ -104,6 +105,21 @@ a.tel:hover{text-decoration:underline}
 .ticket{align-self:flex-start;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;border:1px dashed var(--chat-muted);border-radius:10px;padding:10px 14px;max-width:100%}
 .ticket .code{font:500 1.05rem var(--f-mono);letter-spacing:.06em;color:var(--chat-hi)}
 .ticket .offer{font-size:.85rem}
+.log{display:flex;flex-direction:column;gap:10px;min-height:200px;max-height:380px;overflow-y:auto;padding-right:2px}
+.msg p{white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.err{background:transparent;border:1px dashed var(--chat-muted)}
+.msg.typing p{letter-spacing:.2em;animation:blink 1s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.35}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:400 .82rem/1.3 var(--f-body);padding:.45em .8em;border-radius:999px;border:1px solid var(--chat-muted);background:transparent;color:var(--chat-ink);cursor:pointer;text-align:left}
+.chip:hover{background:var(--chat-bubble)}
+.chat-form{display:flex;gap:8px}
+.chat-form input{flex:1;min-width:0;font:400 1rem var(--f-body);padding:.7em .9em;border-radius:10px;border:1px solid var(--chat-muted);background:var(--chat-bubble);color:var(--chat-ink)}
+.chat-form input::placeholder{color:var(--chat-muted)}
+.chat-form .send{flex:none;font:600 1.1rem var(--f-mono);padding:0 1em;border-radius:10px;border:0;background:var(--chat-hi);color:var(--chat-hi-ink);cursor:pointer}
+.chat-form .send:disabled,.chat-form input:disabled{opacity:.55;cursor:default}
+.chat-note{margin:0;font-size:.76rem;color:var(--chat-muted)}
+@media (prefers-reduced-motion: reduce){.msg.typing p{animation:none}}
 
 .sec{border-top:1px solid var(--line);padding-block:clamp(40px,7vw,88px)}
 .sec-grid{display:grid;grid-template-columns:minmax(0,240px) minmax(0,1fr);gap:clamp(20px,5vw,56px)}
@@ -214,21 +230,30 @@ tr:first-child.sub td{padding-top:6px}
   <div class="hero-copy">
     <p class="eyebrow"><span data-ru="Стоматология в Харькове">Стоматологія в Харкові</span></p>
     <h1><span data-ru="Узнайте стоимость лечения раньше, чем позвоните">Дізнайтесь вартість лікування раніше, ніж зателефонуєте</span></h1>
-    <p class="lead"><span data-ru="ИИ-консультант в ChatGPT ответит на украинском или русском, назовёт ориентировочную цену по нашему прайсу и поможет записаться. Диагнозы он не ставит: их ставит врач на осмотре.">ІІ-консультант у ChatGPT відповість українською або російською, назве орієнтовну ціну за нашим прайсом і допоможе записатися. Діагнози він не ставить: їх ставить лікар на огляді.</span></p>
+    <p class="lead"><span data-ru="ИИ-консультант ответит на украинском или русском, назовёт ориентировочную цену по нашему прайсу и поможет записаться. Диагнозы он не ставит: их ставит врач на осмотре.">ІІ-консультант відповість українською або російською, назве орієнтовну ціну за нашим прайсом і допоможе записатися. Діагнози він не ставить: їх ставить лікар на огляді.</span></p>
     <div class="cta-row">
-      <a class="btn" data-gpt href="https://chatgpt.com/gpts" target="_blank" rel="noopener"><span data-ru="Открыть ИИ-консультанта">Відкрити ІІ-консультанта</span></a>
+      <a class="btn" href="#consultant" data-focus-chat><span data-ru="Спросить ИИ-консультанта">Запитати ІІ-консультанта</span></a>
       <span class="alt"><span data-ru="Или позвоните:">Або зателефонуйте:</span> <a class="tel" href="tel:+380677130913">067 713-09-13</a></span>
     </div>
-    <p class="fine"><span data-ru="Бесплатно. Консультант открывается в ChatGPT.">Безкоштовно. Консультант відкривається в ChatGPT.</span></p>
+    <p class="fine"><span data-ru="Бесплатно, без регистрации.">Безкоштовно, без реєстрації.</span></p>
   </div>
 
-  <figure class="chat">
-    <figcaption class="chat-h"><span class="dot"></span><span><span data-ru="ИИ-консультант · пример диалога">ІІ-консультант · приклад діалогу</span></span></figcaption>
-    <div class="msg user"><p><span data-ru="Сколько стоит имплантация?">Скільки коштує імплантація?</span></p></div>
-    <div class="msg bot"><p><span data-ru="Сам имплант стоит от 400 $ (JD, Италия) до 800 € (Straumann, Швейцария). Оплата в гривнах по курсу НБУ. Коронка на импланте отдельно: металлокерамика от 11 500 грн. Точную сумму назовёт врач после консультации. Я ИИ, а не врач, поэтому это лишь ориентир.">Сам імплант коштує від 400 $ (JD, Італія) до 800 € (Straumann, Швейцарія). Оплата в гривнях за курсом НБУ. Коронка на імпланті окремо: металокераміка від 11 500 грн. Точну суму назве лікар після консультації. Я ІІ, а не лікар, тому це лише орієнтир.</span></p></div>
-    <div class="msg bot"><p><span data-ru="Чтобы записаться, назовите администратору код:">Щоб записатися, назвіть адміністратору код:</span></p></div>
-    <div class="ticket"><span class="code">AI-ХАРКІВ</span><span class="offer"><span class="todo"><span data-ru="Условия скидки уточнить у клиники">Умови знижки уточнити у клініки</span></span></span></div>
-  </figure>
+  <section class="chat" id="consultant" aria-label="ІІ-консультант">
+    <div class="chat-h"><span class="dot"></span><span><span data-ru="ИИ-консультант по ценам">ІІ-консультант по цінах</span></span></div>
+    <div class="log" id="chatLog" role="log" aria-live="polite"></div>
+    <div class="chips" id="chips">
+      <button type="button" class="chip"><span data-ru="Сколько стоит чистка зубов?">Скільки коштує чищення зубів?</span></button>
+      <button type="button" class="chip"><span data-ru="Имплантация: сколько это стоит?">Імплантація: скільки це коштує?</span></button>
+      <button type="button" class="chip"><span data-ru="Сколько стоят брекеты?">Скільки коштують брекети?</span></button>
+      <button type="button" class="chip"><span data-ru="Удаление зуба мудрости">Видалення зуба мудрості</span></button>
+    </div>
+    <form class="chat-form" id="chatForm" autocomplete="off">
+      <label class="sr" for="chatInput"><span data-ru="Ваш вопрос">Ваше запитання</span></label>
+      <input id="chatInput" type="text" maxlength="500" placeholder="Запитайте про ціну" data-ph-ua="Запитайте про ціну" data-ph-ru="Спросите о цене">
+      <button class="send" type="submit" id="chatSend" aria-label="Надіслати">→</button>
+    </form>
+    <p class="chat-note"><span data-ru="ИИ отвечает по прайсу клиники и не заменяет врача. Не пишите здесь личные данные.">ІІ відповідає за прайсом клініки й не замінює лікаря. Не пишіть тут особисті дані.</span></p>
+  </section>
 </section>
 
 <section class="sec" id="services">
@@ -268,7 +293,7 @@ tr:first-child.sub td{padding-top:6px}
     <div class="sec-h">
       <h2><span data-ru="Прайс-лист">Прайс-лист</span></h2>
       <p class="note"><span data-ru="Цены в гривнах, действуют с 01.07.2026. Окончательную сумму определяет врач после осмотра.">Ціни в гривнях, діють з 01.07.2026. Остаточну суму визначає лікар після огляду.</span></p>
-      <a class="btn ghost" data-gpt href="https://chatgpt.com/gpts" target="_blank" rel="noopener"><span data-ru="Посчитать для моего случая">Порахувати для мого випадку</span></a>
+      <a class="btn ghost" href="#consultant" data-focus-chat><span data-ru="Посчитать для моего случая">Порахувати для мого випадку</span></a>
     </div>
     <div class="prices" style="min-width:0">
 <details id="p-diag" open><summary><span data-ru="Консультации, диагностика, гигиена">Консультації, діагностика, гігієна</span></summary><div class="tbl-wrap"><table><tbody><tr class="sub"><td colspan="2"><span data-ru="Консультации">Консультації</span></td></tr><tr><td><span data-ru="Консультация терапевта">Консультація терапевта</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация ортопеда">Консультація ортопеда</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация ортодонта">Консультація ортодонта</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация хирурга">Консультація хірурга</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Консультация имплантолога">Консультація імплантолога</span></td><td class="n"><span class="todo">500 грн</span></td></tr><tr class="sub"><td colspan="2"><span data-ru="Диагностика и гигиена">Діагностика та гігієна</span></td></tr><tr><td><span data-ru="Цифровой рентген">Рентген цифровий</span></td><td class="n">300 грн</td></tr><tr><td><span data-ru="Гигиеническая чистка полости рта">Гігієнічне чищення порожнини рота</span></td><td class="n">2 000 грн</td></tr><tr><td><span data-ru="Air Flow">Air Flow</span></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Фторирование">Фторування</span></td><td class="n">400 грн</td></tr><tr><td><span data-ru="Лечение дёсен (курс 5 дней)">Лікування ясен (курс 5 днів)</span></td><td class="n">4 000 грн</td></tr><tr class="sub"><td colspan="2"><span data-ru="Анестезия">Анестезія</span></td></tr><tr><td><span data-ru="Субмукозная">Субмукозна</span><small><span data-ru="1 карпула">1 карпула</span></small></td><td class="n">400 грн</td></tr><tr><td><span data-ru="Аппликационная">Аплікаційна</span></td><td class="n">300 грн</td></tr><tr><td><span data-ru="Проводниковая">Провідникова</span><small><span data-ru="1 карпула">1 карпула</span></small></td><td class="n">500 грн</td></tr><tr><td><span data-ru="Инфильтрационная">Інфільтраційна</span><small><span data-ru="1 карпула">1 карпула</span></small></td><td class="n">400 грн</td></tr></tbody></table></div></details>
@@ -339,11 +364,11 @@ tr:first-child.sub td{padding-top:6px}
     <div class="sec-h"><h2><span data-ru="Вопросы">Питання</span></h2></div>
     <div class="faq" style="min-width:0">
       <details><summary><span data-ru="ИИ-консультант заменяет врача?">ІІ-консультант замінює лікаря?</span></summary><p><span data-ru="Нет. Он даёт ориентир по прайсу и помогает записаться. Диагноз и план лечения определяет врач на осмотре.">Ні. Він дає орієнтир за прайсом і допомагає записатися. Діагноз і план лікування визначає лікар на огляді.</span></p></details>
-      <details><summary><span data-ru="Это бесплатно?">Це безкоштовно?</span></summary><p><span data-ru="Консультант не берёт плату. Он открывается в ChatGPT, поэтому нужен вход в ваш аккаунт ChatGPT.">Консультант не бере плати. Він відкривається в ChatGPT, тому потрібен вхід у ваш акаунт ChatGPT.</span></p></details>
+      <details><summary><span data-ru="Это бесплатно?">Це безкоштовно?</span></summary><p><span data-ru="Да. Консультант не берёт плату и не просит регистрации.">Так. Консультант не бере плати й не просить реєстрації.</span></p></details>
       <details><summary><span data-ru="Входит ли анестезия в стоимость?">Чи входить анестезія у вартість?</span></summary><p><span data-ru="Нет. В хирургических услугах стоимость указана без анестезии. Анестезия оплачивается отдельно: от 300 грн, карпула 400-500 грн.">Ні. У хірургічних послугах вартість вказана без анестезії. Анестезія оплачується окремо: від 300 грн, карпула 400-500 грн.</span></p></details>
       <details><summary><span data-ru="В какой валюте цены на имплантацию?">У якій валюті ціни на імплантацію?</span></summary><p><span data-ru="Импланты в прайсе указаны в евро и долларах. Платить нужно в гривнах по курсу НБУ на день установки.">Імпланти в прайсі вказані в євро й доларах. Платити потрібно в гривнях за курсом НБУ на день встановлення.</span></p></details>
       <details><summary><span data-ru="Зуб болит прямо сейчас">Зуб болить прямо зараз</span></summary><p><span data-ru="Не ждите ответа чата, позвоните: &lt;a class=&quot;tel&quot; href=&quot;tel:+380677130913&quot;&gt;067 713-09-13&lt;/a&gt;. &lt;span class=&quot;todo&quot;&gt;Уточнить, как клиника принимает с острой болью.&lt;/span&gt;">Не чекайте відповіді чату, зателефонуйте: <a class="tel" href="tel:+380677130913">067 713-09-13</a>. <span class="todo">Уточнити, як клініка приймає з гострим болем.</span></span></p></details>
-      <details><summary><span data-ru="Какие данные можно писать в чат?">Які дані можна писати в чат?</span></summary><p><span data-ru="Достаточно описать симптом или услугу. Не указывайте в чате паспортные данные и номера документов.">Достатньо описати симптом або послугу. Не вказуйте в чаті паспортні дані й номери документів.</span></p></details>
+      <details><summary><span data-ru="Какие данные можно писать в чат?">Які дані можна писати в чат?</span></summary><p><span data-ru="Достаточно описать услугу или спросить о цене. Сообщения обрабатывает внешний ИИ-сервис, поэтому не пишите фамилию, телефон и номера документов.">Достатньо описати послугу або запитати про ціну. Повідомлення обробляє зовнішній ІІ-сервіс, тому не пишіть прізвище, телефон і номери документів.</span></p></details>
     </div>
   </div>
 </section>
@@ -354,7 +379,7 @@ tr:first-child.sub td{padding-top:6px}
       <div>
         <h2><span data-ru="Начните с одного вопроса">Почніть з одного запитання</span></h2>
         <p><span data-ru="Спросите консультанта о цене. Если всё устроит, назовите администратору код при записи.">Запитайте консультанта про ціну. Якщо вас усе влаштує, назвіть адміністратору код під час запису.</span></p>
-        <a class="btn cta-main" data-gpt href="https://chatgpt.com/gpts" target="_blank" rel="noopener"><span data-ru="Открыть ИИ-консультанта">Відкрити ІІ-консультанта</span></a>
+        <a class="btn cta-main" href="#consultant" data-focus-chat><span data-ru="Спросить ИИ-консультанта">Запитати ІІ-консультанта</span></a>
       </div>
       <div class="codebox">
         <span class="code" id="promo">AI-ХАРКІВ</span>
@@ -377,10 +402,6 @@ tr:first-child.sub td{padding-top:6px}
 
 <script>
 (function(){
-  // Вставьте сюда ссылку на ваш GPT, например https://chatgpt.com/g/g-xxxx
-  var GPT_URL = "";
-  var UTM = "?utm_source=landing&utm_medium=button";
-
   var TOOTH = {
     ua:{
       pos:["центральний різець","бічний різець","ікло","перший премоляр","другий премоляр","перший моляр","другий моляр","зуб мудрості"],
@@ -436,15 +457,12 @@ tr:first-child.sub td{padding-top:6px}
       b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === l));
     });
     select(selected);
+    refreshChatLang();
     try { localStorage.setItem("gogita-lang", l); } catch(e){}
   }
   [].forEach.call(document.querySelectorAll("[data-lang]"), function(b){
     b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); });
   });
-
-  if (GPT_URL){
-    [].forEach.call(document.querySelectorAll("[data-gpt]"), function(a){ a.href = GPT_URL + UTM; });
-  }
 
   // переход от напрямка к нужному разделу прайса: раскрываем его
   [].forEach.call(document.querySelectorAll("[data-open]"), function(a){
@@ -477,9 +495,111 @@ tr:first-child.sub td{padding-top:6px}
     try { navigator.clipboard.writeText(code).then(done, fallback); } catch(e){ fallback(); }
   });
 
+
+  // ---- консультант: запросы идут в серверную функцию /api/chat ----
+  var API = "/api/chat";
+  var CHAT = {
+    ua:{
+      hello:"Вітаю! Я ІІ-консультант клініки. Запитайте про ціну: наприклад, скільки коштує чищення зубів чи імплантація. Діагнозів я не ставлю, це робить лікар на огляді.",
+      err:"Не вдалося отримати відповідь. Зателефонуйте: 067 713-09-13.",
+      limit:"Забагато запитань за короткий час. Зачекайте хвилину або зателефонуйте: 067 713-09-13.",
+      ph:"Запитайте про ціну", send:"Надіслати"
+    },
+    ru:{
+      hello:"Здравствуйте! Я ИИ-консультант клиники. Спросите о цене: например, сколько стоит чистка зубов или имплантация. Диагнозов я не ставлю, это делает врач на осмотре.",
+      err:"Не удалось получить ответ. Позвоните: 067 713-09-13.",
+      limit:"Слишком много вопросов за короткое время. Подождите минуту или позвоните: 067 713-09-13.",
+      ph:"Спросите о цене", send:"Отправить"
+    }
+  };
+  var chatLog = document.getElementById("chatLog");
+  var chatForm = document.getElementById("chatForm");
+  var chatInput = document.getElementById("chatInput");
+  var chatSend = document.getElementById("chatSend");
+  var chipsBox = document.getElementById("chips");
+  var greetEl = null;
+  var history = [];
+  var busy = false;
+
+  function addMsg(who, text, cls){
+    var d = document.createElement("div");
+    d.className = "msg " + who + (cls ? " " + cls : "");
+    var p = document.createElement("p");
+    p.textContent = text; // только textContent: ответ модели не попадает в разметку
+    d.appendChild(p);
+    chatLog.appendChild(d);
+    chatLog.scrollTop = chatLog.scrollHeight;
+    return d;
+  }
+
+  function refreshChatLang(){
+    if (greetEl && history.length === 0) greetEl.firstChild.textContent = CHAT[lang].hello;
+    chatInput.placeholder = CHAT[lang].ph;
+    chatSend.setAttribute("aria-label", CHAT[lang].send);
+  }
+
+  function setBusy(b){
+    busy = b;
+    chatInput.disabled = b;
+    chatSend.disabled = b;
+  }
+
+  function ask(text){
+    text = (text || "").replace(/\s+/g, " ").trim().slice(0, 500);
+    if (!text || busy) return;
+    chipsBox.hidden = true;
+    addMsg("user", text);
+    history.push({role:"user", content:text});
+    chatInput.value = "";
+    setBusy(true);
+    var typing = addMsg("bot", "...", "typing");
+    var ctrl = new AbortController();
+    var timer = setTimeout(function(){ ctrl.abort(); }, 30000);
+    fetch(API, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({messages:history.slice(-10), lang:lang}),
+      signal:ctrl.signal
+    }).then(function(r){
+      if (r.status === 429) throw new Error("limit");
+      if (!r.ok) throw new Error("http " + r.status);
+      return r.json();
+    }).then(function(data){
+      if (!data || typeof data.reply !== "string" || !data.reply) throw new Error("empty");
+      typing.remove();
+      addMsg("bot", data.reply);
+      history.push({role:"assistant", content:data.reply});
+    }).catch(function(e){
+      typing.remove();
+      history.pop(); // неудачный вопрос не остаётся в контексте
+      addMsg("bot", e && e.message === "limit" ? CHAT[lang].limit : CHAT[lang].err, "err");
+    }).then(function(){
+      clearTimeout(timer);
+      setBusy(false);
+      chatInput.focus({preventScroll:true});
+    });
+  }
+
+  function initChat(){
+    greetEl = addMsg("bot", CHAT[lang].hello);
+    chatForm.addEventListener("submit", function(e){ e.preventDefault(); ask(chatInput.value); });
+    [].forEach.call(chipsBox.querySelectorAll(".chip"), function(c){
+      c.addEventListener("click", function(){ ask(c.textContent); });
+    });
+    [].forEach.call(document.querySelectorAll("[data-focus-chat]"), function(a){
+      a.addEventListener("click", function(e){
+        e.preventDefault();
+        document.getElementById("consultant").scrollIntoView({behavior:"smooth", block:"center"});
+        chatInput.focus({preventScroll:true});
+      });
+    });
+    refreshChatLang();
+  }
+
   var saved = null;
   try { saved = localStorage.getItem("gogita-lang"); } catch(e){}
   select(selected);
+  initChat();
   if (saved === "ru") setLang("ru");
 })();
 </script>
